@@ -7,7 +7,7 @@
     <title>CSV Manipulation Program</title>
     <!-- SheetJS for XLSX/CSV reading and writing -->
     <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
-    <link rel="stylesheet" href="scripts/style.css">
+    <link rel="stylesheet" href="scripts/style.css?v=2">
 </head>
 
 <body>
@@ -93,11 +93,32 @@
             <div class="actions">
                 <button id="btn-filter" class="primary-btn">Filter Data</button>
                 <button id="btn-download" class="secondary-btn" disabled>Download Result</button>
-                <button id="btn-clear" class="secondary-btn" style="border-color: #999; color: #666;">Clear All</button>
+                <button id="btn-clear" class="secondary-btn" style="border-color: #999; color: #666;">Clear
+                    Filter</button>
+                <button id="btn-remove-file" class="danger-btn" style="display: none;">เอาไฟล์ออก</button>
             </div>
         </section>
 
         <section class="results">
+            <div class="result-summary-card" id="result-summary-card"
+                style="display: none; width: fit-content; margin: 0 0 25px 0; background: linear-gradient(135deg, var(--primary-color) 0%, #FF8C00 100%); border-radius: 12px; padding: 25px 35px; box-shadow: 0 8px 20px rgba(255, 107, 0, 0.2); color: white; transition: transform 0.3s ease; align-items: center; justify-content: center; gap: 20px;">
+                <div
+                    style="background: rgba(255, 255, 255, 0.2); border-radius: 50%; width: 70px; height: 70px; display: flex; justify-content: center; align-items: center;">
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                </div>
+                <div style="display: flex; flex-direction: column;">
+                    <h3
+                        style="margin: 0; font-size: 1.1rem; font-weight: 500; opacity: 0.9; text-transform: uppercase; letter-spacing: 0.5px;">
+                        รายการที่ค้นพบทั้งหมด</h3>
+                    <div style="font-size: 4rem; font-weight: 800; line-height: 1; margin-top: 5px; text-shadow: 1px 2px 4px rgba(0,0,0,0.1);"
+                        id="result-count">0</div>
+                </div>
+            </div>
+
             <div class="pagination-header">
                 <div class="table-info" id="table-info"></div>
                 <div class="pagination-controls" id="pagination-controls" style="display: none;">
@@ -109,15 +130,18 @@
                 </div>
             </div>
 
-            <div class="spinner-container" id="spinner-container">
-                <div class="spinner"></div>
-                <div class="spinner-text">กำลังประมวลผล...</div>
+            <div class="top-scrollbar" id="top-scrollbar"
+                style="overflow-x: auto; overflow-y: hidden; height: 16px; margin-bottom: 5px;">
+                <div id="top-scrollbar-content" style="height: 1px;"></div>
             </div>
-
-            <div class="table-wrapper" id="table-wrapper">
+            <div class="table-wrapper" id="table-wrapper" style="position: relative;">
+                <div id="table-overlay"
+                    style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); z-index: 10; flex-direction: column; justify-content: center; align-items: center; min-height: 200px;">
+                    <div class="spinner"></div>
+                    <div class="spinner-text" id="table-overlay-text" style="margin-top: 15px;">กำลังประมวลผล...</div>
+                </div>
                 <table id="data-table">
-                    <thead>
-                        <tr id="table-head"></tr>
+                    <thead id="table-head">
                     </thead>
                     <tbody id="table-body"></tbody>
                 </table>
