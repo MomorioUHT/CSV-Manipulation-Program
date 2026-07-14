@@ -3,5 +3,5 @@
 
 ## Run the Application
 1. Clone this repository.
-2. Open ```program.html```
+2. Open ```CSVManipulation.html```
 3. The performance is depending on the size of the file and user's CPU power.
